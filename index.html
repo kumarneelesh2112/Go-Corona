@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Go Corona</title>
+    <link rel="stylesheet"  type="text/css" href="style.css">
+    
+</head>
+<body>
+
+    <audio id="song1" src="./o_nine _thou.mp3" preload="auto"></audio>
+    <audio id="song2" src="./man-scream.mp3" preload="auto"></audio>
+
+    
+    
+    <div class="Game">
+        <div class="ScoreBoard"></div>
+        <div class="pop_up">
+            <p> press here to start <br>
+                use arrow key to navigate<br>
+                avoid contact with Covid virus...<br>
+            </p>
+        </div>
+
+        <div class="road ">
+            
+        </div>
+
+
+    </div>
+
+
+
+    <script>
+
+                
+        const ScoreBoard=document.querySelector(".ScoreBoard");
+        const pop_up=document.querySelector(".pop_up");
+        const road=document.querySelector(".road");
+        pop_up.addEventListener("click",playgame);
+
+        let keys={ArrowUp :false,ArrowDown : false,ArrowLeft: false,ArrowRight: false};
+        let players={speed:5,score:0};
+
+        document.addEventListener("keydown",keyDown);
+        document.addEventListener("keyup",keyUp);
+
+        function keyDown(e)
+        {
+            //console.log(keys);
+            keys[e.key]=true;
+        }
+
+        function keyUp(e)
+        {
+            keys[e.key]=false;
+           
+        }
+
+        function iscollition(a,b)
+        {
+            arect=a.getBoundingClientRect();
+            brect=b.getBoundingClientRect();
+            return !((arect.bottom<brect.top)||(arect.top>brect.bottom)||(arect.right<brect.left)||(arect.left>brect.right));
+        }
+        
+        function movedivider()
+        {
+            let lines=document.querySelectorAll('.line');;
+            
+            lines.forEach(function(item){
+                
+                if(item.y>700)
+                {
+                    item.y=item.y-750;
+                }
+
+                item.y=item.y+players.speed;
+                item.style.top=item.y+"px";
+            })
+            
+              
+            
+            
+        }
+
+        function movevirus(car)
+        {
+            let virus=document.querySelectorAll('.virus');;
+
+           
+            virus.forEach(function(item){
+                
+                if(iscollition(car,item))
+                {
+                    
+                    players.start=false;
+                    pop_up.classList.remove("hide"); 
+                    pop_up.innerHTML="oops you got infected your score: "+players.score + " <br> press here to play";
+                    document.getElementById("song2").play();
+                    document.getElementById("song1").pause();
+                }
+                if(item.y>700)
+                {
+                    item.y=item.y-750;
+                    item.style.left=Math.floor(Math.random()*450)+"px"
+                    
+                }
+
+                item.y=item.y+players.speed;
+                item.style.top=item.y+"px";
+                
+            })
+            
+               
+            
+            
+        }
+
+
+        function startplay()
+        {
+            
+
+            let car=document.querySelector(".car");
+           
+            let road_pos=road.getBoundingClientRect();
+
+                       
+            
+            if(players.start==true)
+            {
+                if(keys.ArrowUp && players.y>road_pos.top+150) players.y=players.y-players.speed;
+                if(keys.ArrowDown && players.y<road_pos.bottom-120) players.y=players.y+players.speed;
+                if(keys.ArrowLeft && players.x>0) players.x=players.x-players.speed;
+                if(keys.ArrowRight && players.x<road_pos.width-70) players.x=players.x+players.speed;
+                car.style.top=players.y+"px";
+                car.style.left=players.x+"px";
+                movedivider()
+                movevirus(car);
+                window.requestAnimationFrame(startplay);
+                players.score++;
+                ScoreBoard.innerHTML="Score : "+players.score;
+            }
+            
+        }
+
+        function playgame()
+        {
+            //road.classList.remove("hide");
+            pop_up.classList.add("hide");   
+            road.innerHTML="";        
+            document.getElementById("song1").play();
+            players.start=true;
+            players.score=0;
+            window.requestAnimationFrame(startplay);
+            let car= document.createElement("div");
+            car.setAttribute("class","car");
+            road.appendChild(car);
+            players.x=car.offsetLeft;
+            players.y=car.offsetTop;
+            for(x=0;x<=5;x++)
+            {
+                let roadline=document.createElement("div");
+                roadline.setAttribute("class","line");
+                roadline.y=x*250;
+                roadline.style.top=roadline.y+"px";
+                 road.appendChild(roadline);
+
+            }
+
+
+            for(x=0;x<=3;x++)
+            {
+                let virus=document.createElement("div");
+                virus.setAttribute("class","virus");
+                virus.y=-x*150;
+                virus.style.top=virus.y+"px";
+                virus.style.left=Math.floor(Math.random()*350)+"px"
+                
+                 road.appendChild(virus);
+
+            }
+        }
+    
+    </script>
+    
+    
+</body>
+
+
+</html>

@@ -1,0 +1,95 @@
+*{
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    
+    
+}
+
+body{
+    height: 100vh;
+    width: 100%;
+    background-image: url(./city.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.ScoreBoard{
+    position: absolute;
+    text-align: center;
+    font-size: 40px;
+    left:20px;
+    width: 300px;
+    color:white;
+    background-color:#e74c3c;
+    font-family:  sans-serif;
+    box-shadow: 0 5px  5px #777;
+    top:20px;
+    z-index: 5;
+    
+}
+
+
+.hide
+{
+    display: none;
+}
+.car
+{
+    height: 20%;
+    width: 14%;
+    
+    position: absolute;
+    bottom: 30px;
+    background-image: url(./car-removebg-preview.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+    
+   
+}
+.road
+{
+    width: 40%;
+    height: 100vh;
+    background-color:#222f3e;
+    position: center;
+    margin: auto;
+    position: relative;
+}
+.line
+{
+    width:20px;
+    height: 75px;
+    background-color: white;
+    margin:  auto;
+    margin-top: 50px;
+    position: absoulte;
+}
+
+.virus
+{
+    height: 70px;
+    width: 70px;
+    
+    position: absolute;
+    background-image: url(./virus1.png);
+    background-size:contain;
+    background-repeat: no-repeat;
+
+}
+.pop_up
+{
+    position: absolute;
+    text-align: center;
+    font-size: 35px;
+    left:30%;
+    width: 40%;
+    color:white;
+    background-color:#e74c3c;
+    font-family:sans-serif;
+    box-shadow: 0 5px  5px #777;
+    top:30%;
+    border-radius: 25px;
+    z-index: 5;
+
+}
